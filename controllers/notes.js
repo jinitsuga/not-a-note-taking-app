@@ -1,5 +1,4 @@
 const notesRouter = require("express").Router();
-const { response } = require("../app");
 const Note = require("../models/note");
 
 notesRouter.get("/", (req, res, next) => {
@@ -9,7 +8,9 @@ notesRouter.get("/", (req, res, next) => {
 });
 
 notesRouter.get("/:id", (req, res, next) => {
-  Note.findById(req.params.id).then((note) => res.json(note));
+  Note.findById(req.params.id)
+    .then((note) => res.json(note))
+    .catch((err) => next(err));
 });
 
 notesRouter.post(" /", (req, res, next) => {
@@ -22,7 +23,9 @@ notesRouter.post(" /", (req, res, next) => {
   note
     .save()
     .then((savedNote) => {
-      response.json(savedNote);
+      res.json(savedNote);
     })
     .catch((err) => next(err));
 });
+
+module.exports = notesRouter;
