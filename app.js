@@ -18,10 +18,10 @@ mongoose
 app.use(cors());
 app.use(express.json());
 
+app.use("/api/notes", notesRouter);
+
 app.use("/", (req, res, next) => {
   res.send("hola world lol");
 });
-
-app.use("/api/notes", notesRouter);
 
 module.exports = app;

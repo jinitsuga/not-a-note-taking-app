@@ -13,7 +13,7 @@ notesRouter.get("/:id", (req, res, next) => {
     .catch((err) => next(err));
 });
 
-notesRouter.post(" /", (req, res, next) => {
+notesRouter.post("/", (req, res, next) => {
   const data = req.body;
   const note = new Note({
     title: data.title,
