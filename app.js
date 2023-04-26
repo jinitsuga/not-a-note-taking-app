@@ -5,7 +5,6 @@ const mongoose = require("mongoose");
 const notesRouter = require("./controllers/notes");
 const logger = require("./utils/logger");
 const config = require("./utils/config");
-const mongoUrl = "mongodb://localhost/bloglist";
 
 mongoose
   .connect(config.MONGO_URL)
@@ -19,10 +18,10 @@ mongoose
 app.use(cors());
 app.use(express.json());
 
-app.use("/api/notes", notesRouter);
-
-app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+app.use("/", (req, res, next) => {
+  res.send("hola world lol");
 });
+
+app.use("/api/notes", notesRouter);
 
 module.exports = app;
