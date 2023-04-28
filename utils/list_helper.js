@@ -15,7 +15,6 @@ const average = (array) => {
 };
 
 const totalLikes = (posts) => {
-  console.log(posts);
   return posts.length === 0
     ? 0
     : posts.reduce((sum, post) => {
@@ -23,9 +22,14 @@ const totalLikes = (posts) => {
       }, 0);
 };
 
+const favoriteBlog = (posts) => {
+  return posts.sort((a, b) => b.likes - a.likes);
+};
+
 module.exports = {
   dummy,
   reverse,
   average,
   totalLikes,
+  favoriteBlog,
 };
