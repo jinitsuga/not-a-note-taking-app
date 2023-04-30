@@ -11,10 +11,6 @@ test("notes returned as json", async () => {
     .expect("Content-Type", /application\/json/);
 }, 100000);
 
-afterAll(async () => {
-  await mongoose.connection.close();
-});
-
 test("there are two notes on the DB", async () => {
   const response = await api.get("/api/notes");
 
@@ -23,6 +19,9 @@ test("there are two notes on the DB", async () => {
 
 test("second note is about HTML", async () => {
   const response = await api.get("/api/notes");
+  expect(response.body[1].title).toBe("HTML is easy");
+});
 
-  expect(response.body[1].content).toBe("HTML is easy");
+afterAll(async () => {
+  await mongoose.connection.close();
 });
