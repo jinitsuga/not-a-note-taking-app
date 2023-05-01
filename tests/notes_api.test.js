@@ -5,18 +5,8 @@ const Note = require("../models/note");
 
 const api = supertest(app);
 
-const initialNotes = [
-  {
-    title: "random title 123",
-    likes: 3,
-    date: new Date(),
-  },
-  {
-    title: "HTML is easy",
-    likes: 4,
-    date: new Date(),
-  },
-];
+const initialNotes = require("./test_helper").initialNotes;
+const notesFromDb = require("./test_helper").notesFromDb;
 
 beforeEach(async () => {
   await Note.deleteMany({});
@@ -56,6 +46,19 @@ test("a specific note is found within all notes", async () => {
 
   const contents = response.body.map((res) => res.title);
   expect(contents).toContain("random title 123");
+});
+
+test("a specific note can be viewed", async () => {
+  const allNotes = await notesFromDb();
+
+  const noteToSearch = allNotes[1];
+
+  const result = await api
+    .get(`/api/notes/${noteToSearch._id}`)
+    .expect(200)
+    .expect("Content-Type", /application\/json/);
+
+  expect(result.body.title).toEqual(noteToSearch.title);
 });
 
 afterAll(async () => {
