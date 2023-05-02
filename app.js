@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const notesRouter = require("./controllers/notes");
 const logger = require("./utils/logger");
 const config = require("./utils/config");
+const usersRouter = require("./controllers/users");
 
 mongoose
   .connect(config.MONGO_URL)
@@ -18,6 +19,7 @@ mongoose
 app.use(cors());
 app.use(express.json());
 
+app.use("/api/users", usersRouter);
 app.use("/api/notes", notesRouter);
 
 app.use("/", (req, res, next) => {

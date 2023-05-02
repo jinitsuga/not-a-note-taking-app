@@ -17,7 +17,13 @@ usersRouter.post("/", async (req, res) => {
 
   const savedUser = await user.save();
 
-  response.status(201).json(savedUser);
+  res.status(201).json(savedUser);
+});
+
+usersRouter.get("/", async (req, res) => {
+  const users = await User.find({});
+
+  res.json(users);
 });
 
 module.exports = usersRouter;
