@@ -10,11 +10,11 @@ const notesFromDb = require("./test_helper").notesFromDb;
 
 beforeEach(async () => {
   await Note.deleteMany({});
-  let noteObj = new Note(initialNotes[0]);
-  await noteObj.save();
-
-  noteObj = new Note(initialNotes[1]);
-  await noteObj.save();
+  console.log("cleared db");
+  initialNotes.forEach((note) => {
+    const noteObj = new Note(note);
+    noteObj.save();
+  });
 });
 
 test("notes returned as json", async () => {
