@@ -26,10 +26,21 @@ const favoriteBlog = (posts) => {
   return posts.sort((a, b) => b.likes - a.likes);
 };
 
+// Auth related helpers
+
+const getTokenFrom = (request) => {
+  const authorization = request.get("authorization");
+  if (authorization && authorization.startsWith("Bearer ")) {
+    return authorization.replace("Bearer ", "");
+  }
+  return null;
+};
+
 module.exports = {
   dummy,
   reverse,
   average,
   totalLikes,
   favoriteBlog,
+  getTokenFrom,
 };
