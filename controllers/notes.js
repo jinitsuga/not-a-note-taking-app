@@ -24,8 +24,6 @@ notesRouter.post("/", async (req, res, next) => {
 
   const user = await User.findById(decodedToken.id);
 
-  console.log(user);
-
   data.content.date = new Date().toLocaleDateString();
 
   const note = new Note({
