@@ -1,7 +1,7 @@
-const { response } = require("express");
 const logger = require("./logger");
 
 const errorHandler = (error, req, res, next) => {
+  console.log("ERROR HANDLING");
   logger.error(error.message);
 
   if (error.name === "CastError") {
@@ -11,6 +11,11 @@ const errorHandler = (error, req, res, next) => {
     return res.status(400).send({ error: error.message });
   }
   if (error.name === "JsonWebTokenError") {
-    return res.status(400).send({ error: error.message });
+    return res.status(400).send({ error: "JWT IS WRONG" });
   }
+  next(error);
+};
+
+module.exports = {
+  errorHandler,
 };

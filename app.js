@@ -7,6 +7,7 @@ const logger = require("./utils/logger");
 const config = require("./utils/config");
 const usersRouter = require("./controllers/users");
 const loginRouter = require("./controllers/login");
+const errorHandler = require("./utils/errorHandler").errorHandler;
 
 mongoose
   .connect(config.MONGO_URL)
@@ -23,6 +24,8 @@ app.use(express.json());
 app.use("/api/users", usersRouter);
 app.use("/api/login", loginRouter);
 app.use("/api/notes", notesRouter);
+
+app.use(errorHandler);
 
 app.use("/", (req, res, next) => {
   res.send("hola world lol");
