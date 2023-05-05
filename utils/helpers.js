@@ -1,7 +1,14 @@
 const logger = require("./logger");
 
+const requestLogger = (request, response, next) => {
+  logger.info("Method:", request.method);
+  logger.info("Path:  ", request.path);
+  logger.info("Body:  ", request.body);
+  logger.info("---");
+  next();
+};
+
 const errorHandler = (error, req, res, next) => {
-  console.log("ERROR HANDLING");
   logger.error(error.message);
 
   if (error.name === "CastError") {
@@ -13,9 +20,13 @@ const errorHandler = (error, req, res, next) => {
   if (error.name === "JsonWebTokenError") {
     return res.status(400).send({ error: "JWT IS WRONG" });
   }
+  if (error) {
+    return res.status(400).send({ error: "some error" });
+  }
   next(error);
 };
 
 module.exports = {
   errorHandler,
+  requestLogger,
 };
