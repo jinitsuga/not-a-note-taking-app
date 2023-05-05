@@ -22,6 +22,8 @@ const errorHandler = (error, req, res, next) => {
   }
   if (error) {
     return res.status(400).send({ error: "some error" });
+  } else if (error.name === "TokenExpiredErrror") {
+    return res.status(401).json({ error: "token expired" });
   }
   next(error);
 };
